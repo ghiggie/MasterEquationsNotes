@@ -19,6 +19,7 @@
 \newcommand{\Ptra}[2]{\Tr_{#1}\left\{#2\right\}}
 \newcommand{\til}[1]{\widetilde{#1}}
 \newcommand{\ave}[2]{\langle #1\rangle_{#2}}
+\newcommand{\I}{\mathbb{I}}
 
 \begin{document}
 
@@ -49,7 +50,7 @@ For all calculations, we use a unit system in which $\hbar = 1$. Consider a bipa
 \begin{equation}\label{ham}
 H_{AB} = H_{AB} + V_{AB}
 \end{equation}
-where $H_{AB} =  H_A\ten I + I\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten I + I\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
+where $H_{AB} =  H_A\ten\I + \I\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten\I + \I\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
 
 We assume that the systems $A$ and $B$, when taken together, form a closed system. In this case, the state of the system evolves under standard von Neumann evolution:
 \begin{equation}\label{vnAB}
@@ -92,7 +93,7 @@ where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$.
 
 Our goal is to try to extract information regarding system $A$ while ignoring system $B$. Physically, this may simply be because system $B$ has too many degrees of freedom to be feasibly studied, such as the case of an atom coupled to a thermal reservoir. In order to quantify the known information regarding the subsystem $A$, we want to create a density operator $\rho_A$ from the operator $\rho_{AB}$. The map $\rho_{AB}\mapsto\rho_A$ is given by the expression
 \begin{equation}\label{ptra}
-\rho_A = \Ptra{A}{\rho_{AB}}=\sum_{\beta}\qty(I\ten\bra{\beta})\rho_{AB}\qty(I\ten\ket{\beta})
+\rho_A = \Ptra{A}{\rho_{AB}}=\sum_{\beta}\qty(\I\ten\bra{\beta})\rho_{AB}\qty(\I\ten\ket{\beta})
 \end{equation}
 where $\{\ket{\beta}\}$ is an orthonormal basis of system $B$. This mapping is called the \textit{partial trace}, taken with respect to system $B$. It can be shown that this mapping is the \textit{unique} mapping that satisfies the three density operator conditions (for a nice proof of this statement, see Box $2.6$ in Nielsen and Chuang, \textit{Quantum Computation and Quantum Information}).
 
@@ -176,21 +177,34 @@ where $G_{\alpha,\beta}(t_1,t_2) =\ave{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\da
 
 
 
-\section{Specific Model}
+\section{Symmetric Spin-Boson Model}
 
 We will consider the case of two qubits coupled to two baths. Each qubit is coupled to a separate bath, and the qubits themselves are coupled together. The free Hamiltonian of the entire system may be written as
 \begin{align}\label{freeham}
 \begin{split}
-H_0 &= (H_1\ten I_2 + I_1\ten H_2)\ten(I_H\ten I_C) + (I_1\ten I_2)\ten\left[H_H\ten I_C + I_H\ten H_C\right]\\
-&= H_A\ten I_B + I_A\ten H_B
+H_0 &= (H_1\ten \I_2 + \I_1\ten H_2)\ten(\I_H\ten \I_C) + (\I_1\ten \I_2)\ten\left[H_H\ten \I_C + \I_H\ten H_C\right]\\
+&= H_A\ten \I_B + \I_A\ten H_B
 \end{split}
 \end{align}
 We keep the Hamiltonian for the qubits general, but we assume that the baths are composed of an infinite number of non-interacting quantum harmonic oscillators, so that the Hamiltonians of the baths may be written as
-\begin{equation}
-H_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}I_i\right)\ten\left(\omega_l a_l^{\dag}(k)a_l(k)\right)\ten\left(\bigotimes_{i=k+1}^{\infty}I_i\right)\right],\ l = H,C
+\begin{equation}\label{bathham}
+H_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}\I_i\right)\ten\left(\omega_l(k) a_l^{\dag}(k)a_l(k)\right)\ten\left(\bigotimes_{i=k+1}^{\infty}\I_i\right)\right],\ l = H,C
 \end{equation}
+The coupling term is written as
+\begin{equation}\label{modcoup}
+V_{AB} = V_{1,2}\ten\left(\I_H\ten \I_C\right) + \left(V_{1,H}\ten \I_2\right)\ten\left(Y_H\ten \I_C\right) + \left(\I_1\ten V_{2,C}\right)\ten\left(\I_H\ten Y_C\right)
+\end{equation}
+where
+\begin{equation}\label{yl}
+Y_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}\I_i\right)\ten\left(\epsilon_l(k)\left[a_l^{\dag}(k) + a_l(k)\right]\right)\ten\left(\bigotimes_{i=k+1}^{\infty}\I_i\right)\right],\ l = H,C
+\end{equation}
+In terms of our previously defined operators, we have
 
-
+\begin{tabular}{ll}
+	$A_1 = V_{1,2}$ & $X_1 = \I_H\ten\I_C$ \\ 
+	$A_2 = V_{1,H}\ten\I_2$ & $X_2 = Y_H\ten\I_C$ \\ 
+	$A_3 = \I_1\ten V_{2,C}$ & $X_3 = \I_H\ten Y_C$ \\ 
+\end{tabular} 
 
 
 
