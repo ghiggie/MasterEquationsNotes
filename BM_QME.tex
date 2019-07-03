@@ -1,0 +1,197 @@
+%\documentclass[aps, prl, preprint]{revtex4-1}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{hyperref}
+
+\hypersetup{colorlinks = true, urlcolor = blue}
+\geometry{margin=1in}
+
+\newcommand{\ten}{\otimes}
+\newcommand{\Tra}[1]{\Tr\left\{#1\right\}}
+\newcommand{\Ptra}[2]{\Tr_{#1}\left\{#2\right\}}
+\newcommand{\til}[1]{\widetilde{#1}}
+\newcommand{\ave}[2]{\langle #1\rangle_{#2}}
+
+\begin{document}
+
+%% RevTeX 4.1 Title Setup
+
+%\title{Notes on the Born-Markov Master Equations}
+%\author{Garrett Higginbotham}
+%\email{ghiggie@uab.edu}
+%\affiliation{Department of Physics\\The University of Alabama at Birmingham}
+%\date{\today}
+%\begin{abstract}
+%We derive the Born-Markov equations, with and without the secular approximation.
+%\end{abstract}
+
+%% Regular Title Setup
+%
+\title{Notes on the Born-Markov Master Equations}
+\author{Garrett Higginbotham\\ghiggie@uab.edu\\Department of Physics\\The University of Alabama at Birmingham}
+
+\maketitle
+\tableofcontents
+
+\section{Closed Systems Formalism}
+
+\subsection{Setup}
+
+For all calculations, we use a unit system in which $\hbar = 1$. Consider a bipartite system consisting of subsystems $A$ and $B$, each of which are possibly multipartite. We write the Hamiltonian of the entire system as
+\begin{equation}\label{ham}
+H_{AB} = H_{AB} + V_{AB}
+\end{equation}
+where $H_{AB} =  H_A\ten I + I\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten I + I\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
+
+We assume that the systems $A$ and $B$, when taken together, form a closed system. In this case, the state of the system evolves under standard von Neumann evolution:
+\begin{equation}\label{vnAB}
+\dot{\rho}_{AB}(t) = -i\comm{H_{AB}}{\rho_{AB}(t)}
+\end{equation}
+Here, $\rho_{AB}$ is the density operator describing the state of the closed system. It is expected that any such density operator must satisfy the following conditions:
+\begin{enumerate}
+	\item Hermiticity: $\rho = \rho^{\dag}$
+	\item Positivity: $\rho \geq 0$ (i.e., $\forall \lambda\in \text{Spec}(\rho),\ \lambda \geq 0$)
+	\item Normalization: $\Tra{\rho} = 1$
+\end{enumerate}
+These properties are required in order to ensure that the density operator gives rise to proper statistical distributions. The first condition ensures that the probabilities are real numbers, the second ensures that the probabilities are non-negative, and the final condition ensures that the probabilities sum to $1$.
+
+\subsection{Interaction Picture}
+
+We will now switch from the Schr{\"o}dinger picture to the interaction picture by introducing the invertible mapping
+\begin{equation}\label{intpic}
+\til{A}(t) = e^{iH_0t}Ae^{-iH_0t}
+\end{equation}
+where $A$ is an arbitrary operator in the Schr{\"o}dinger picture, and $\til{A}(t)$ is the corresponding operator in the interaction picture. It is stressed that $\til{A}(t)$ is usually time-dependent, even if $A$ is time-independent. An example of them both being time-independent occurs when $\comm{A}{H_0} = 0$, in which case $\til{A}(t) = A$. Further, note that $\til{A}(0) = A$. In the interaction picture, the von Neumann equation is given by
+\begin{equation}\label{intdyn}
+\dv{t}\til{\rho}_{AB}(t) = -i\comm{\til{V}_{AB}(t)}{\til{\rho}_{AB}(t)}
+\end{equation}
+Switching from the Schr{\"o}dinger picture to the interaction picture has the effect of removing the free Hamiltonians from the dynamics, allowing us to focus our attention on the interaction between systems $A$ and $B$. Equation~\ref{intdyn} may be integrated to give
+\begin{equation}\label{tmp}
+\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) = (-i)\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t_1)}
+\end{equation}
+Unfortunately, the right hand side of equation~\ref{tmp} still contains $\til{\rho}_{AB}(t)$, so it isn't particularly useful. However, we may recursively substitute equation~\ref{intdyn} into equation~\ref{tmp} to obtain
+\begin{align}\label{totintpert}
+\begin{split}
+\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\comm{\til{V}_{AB}(t_3)}{\til{\rho}_{AB}(t)}}}\\
+&+\ldots
+\end{split}
+\end{align}
+where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$.
+
+\section{Open Formalism from Closed Formalism}
+
+Our goal is to try to extract information regarding system $A$ while ignoring system $B$. Physically, this may simply be because system $B$ has too many degrees of freedom to be feasibly studied, such as the case of an atom coupled to a thermal reservoir. In order to quantify the known information regarding the subsystem $A$, we want to create a density operator $\rho_A$ from the operator $\rho_{AB}$. The map $\rho_{AB}\mapsto\rho_A$ is given by the expression
+\begin{equation}\label{ptra}
+\rho_A = \Ptra{A}{\rho_{AB}}=\sum_{\beta}\qty(I\ten\bra{\beta})\rho_{AB}\qty(I\ten\ket{\beta})
+\end{equation}
+where $\{\ket{\beta}\}$ is an orthonormal basis of system $B$. This mapping is called the \textit{partial trace}, taken with respect to system $B$. It can be shown that this mapping is the \textit{unique} mapping that satisfies the three density operator conditions (for a nice proof of this statement, see Box $2.6$ in Nielsen and Chuang, \textit{Quantum Computation and Quantum Information}).
+
+BRIEFLY DISCUSS THE PROPERTIES OF PARTIAL TRACE
+\begin{enumerate}
+	\item $\Ptra{A}{\Ptra{B}{\rho_{AB}}} = \Ptra{B}{\Ptra{A}{\rho_{AB}}} = \Tra{\rho_{AB}}$
+\end{enumerate}
+
+We will now apply the partial trace to the von Neumann evolution in the interaction picture in an attempt to derive the dynamics for $\til{\rho}_A(t)$. It can be shown (see Appendix) that the order of applying partial trace and interaction picture is irrelevant, so that we can safely obtain the correct dynamics by first computing the interaction picture density operator and then applying the partial trace. Applying partial trace, we obtain
+\begin{align}\label{partintpert}
+\begin{split}
+\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}}\\
+&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\comm{\til{V}_{AB}(t_3)}{\til{\rho}_{AB}(t)}}}}\\
+&+\ldots
+\end{split}
+\end{align}
+where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$. Everything to this point has been exact, and we are ready to begin making assumptions and approximations about the model.
+
+\section{Approximations}
+
+\subsection{Weak Coupling Approximation}
+
+In the weak coupling approximation, we truncate the higher-order terms in~\ref{partintpert}. The lowest non-trivial truncation leads to the equation
+\begin{align}\label{truncdyn}
+\begin{split}
+\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}}
+\end{split}
+\end{align}
+The reason that this is the lowest non-trivial truncation is because further truncation leaves us with standard von Neumann dynamics in the interaction picture.
+
+Before we move further, we make the assumption that the inter-system interaction $V_{AB}$ takes on a bilinear form
+\begin{equation}\label{coup}
+V_{AB} = \sum_{\alpha} A_{\alpha}\ten X_{\alpha}
+\end{equation}
+This further forces $V_I$ to take on a bilinear form. Although we require that $V_{AB}$ be Hermitian, we do not necessarily require that $A_{\alpha}$ and $X_{\alpha}$ be Hermitian. We simply require that if $A_{\alpha}\ten X_{\alpha}$ is in the summation, then there exists an index $\beta$ such that $A_{\beta}^{\dag}\ten X_{\beta}^{\dag}$ is also in the summation (for example, consider $V_{AB} = \sigma^{\dag}\ten X + \sigma\ten X^{\dag}$, where $\sigma$ and $X$ are not necessarily Hermitian). With this setup, we write
+\begin{equation}\label{coupdag}
+V_{AB} = \sum_{\beta} A_{\beta}^{\dag}\ten X_{\beta}^{\dag}
+\end{equation}
+We will use equation~\ref{coup} for $\til{V}_{AB}(t_1)$ and equation~\ref{coupdag} for $\til{V}_{AB}(t_2)$. (We should explicitly compute the interaction picture versions of $\til{V}_{AB}$.) Substituting these into equation~\ref{truncdyn}, we obtain
+\begin{align}\label{ugh}
+\begin{split}
+\til{\rho}_{A}(t+\dd{t}) - &\til{\rho}_{A}(t) = (-i)^1\sum_{\alpha}\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{A}_{\alpha}(t_1)\ten \til{X}_{\alpha}(t_1)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{A}_{\alpha}(t_1)\ten \til{X}_{\alpha}(t_1)}{\comm{\til{A}_{\beta}^{\dag}(t_2)\ten \til{X}_{\beta}^{\dag}(t_2)}{\til{\rho}_{AB}(t)}}}
+\end{split}
+\end{align}
+
+\subsection{Born Approximation}
+
+We assume that system $B$ has many, many more degrees of freedom than system $A$, and we further assume that system $B$ is initially in a Gibbs state $\rho_B^G$, so that the initial state of the system is $\rho_{AB}(0) = \rho_A(0)\ten\rho_B^G$. During the course of the total evolution, system $B$ will cause changes in system $A$, and system $A$ will likewise cause changes in system $B$. However, because system $B$ has so many degrees of freedom, system $B$ will quickly relax to another Gibbs state, thus staying in a Gibbs state for all perceivable time (this is the typicality argument). Because we assume that the systems are weakly coupled, we may make the Born approximation
+\begin{equation}\label{born}
+\rho_{AB}(t) = \rho_A(t)\ten\rho_B(t) + \rho_{corr}(t)\approx \rho_A(t)\ten\rho_B^G
+\end{equation}
+Substituting \ref{born} into \ref{truncdyn} and expanding the Kronecker products, we obtain
+\begin{align}\label{fuckmyass}
+\begin{split}
+\til{\rho}_A(t+\dd{t})-&\til{\rho}_A(t) = (-i)^1\sum_{\alpha}\int_t^{t+\dd{t}} \left\{\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\ave{\til{X}_{\alpha}(t_1)}{\rho_B^G}\right\}\\
+&+(-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left[\til{A}_{\alpha}(t_1)\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha,\beta}(t_1,t_2)\\
+&+\left[\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\right]G_{\alpha,\beta}^{*}(t_1,t_2)
+\end{split}
+\end{align}
+where $G_{\alpha,\beta}(t_1,t_2) =\ave{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\dag}(t_2)}{\rho_B^G}= \Tra{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\dag}(t_2)\rho_B^G}$. This dynamical equation is called the Redfield equation. By redefining the zero-point energy of the bath, we can always set $\ave{\til{X}_{\alpha}(t_1)}{\rho_B^G} = 0$, so that the Redfield equation becomes
+\begin{align}\label{redfield}
+\begin{split}
+\til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha,\beta}(t_1,t_2)\right.\\
+&\left.+\left[\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\right]G_{\alpha,\beta}^{*}(t_1,t_2)\right\}
+\end{split}
+\end{align}
+
+\subsection{Markov Approximation}
+
+
+
+
+
+
+\subsection{Secular Approximation}
+
+
+
+
+
+\section{Specific Model}
+
+We will consider the case of two qubits coupled to two baths. Each qubit is coupled to a separate bath, and the qubits themselves are coupled together. The free Hamiltonian of the entire system may be written as
+\begin{align}\label{freeham}
+\begin{split}
+H_0 &= (H_1\ten I_2 + I_1\ten H_2)\ten(I_H\ten I_C) + (I_1\ten I_2)\ten\left[H_H\ten I_C + I_H\ten H_C\right]\\
+&= H_A\ten I_B + I_A\ten H_B
+\end{split}
+\end{align}
+We keep the Hamiltonian for the qubits general, but we assume that the baths are composed of an infinite number of non-interacting quantum harmonic oscillators, so that the Hamiltonians of the baths may be written as
+\begin{equation}
+H_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}I_i\right)\ten\left(\omega_l a_l^{\dag}(k)a_l(k)\right)\ten\left(\bigotimes_{i=k+1}^{\infty}I_i\right)\right],\ l = H,C
+\end{equation}
+
+
+
+
+
+\end{document}
