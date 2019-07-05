@@ -1,5 +1,5 @@
-%\documentclass[aps, prl, preprint]{revtex4-1}
-\documentclass{article}
+\documentclass[aps, prl, preprint]{revtex4-1}
+%\documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -19,28 +19,28 @@
 \newcommand{\Ptra}[2]{\Tr_{#1}\left\{#2\right\}}
 \newcommand{\til}[1]{\widetilde{#1}}
 \newcommand{\ave}[2]{\langle #1\rangle_{#2}}
-\newcommand{\I}{\mathbb{I}}
+\newcommand{\I}{\mathcal{I}}
 
 \begin{document}
 
 %% RevTeX 4.1 Title Setup
 
-%\title{Notes on the Born-Markov Master Equations}
-%\author{Garrett Higginbotham}
-%\email{ghiggie@uab.edu}
-%\affiliation{Department of Physics\\The University of Alabama at Birmingham}
-%\date{\today}
-%\begin{abstract}
-%We derive the Born-Markov equations, with and without the secular approximation.
-%\end{abstract}
+\title{Notes on the Born-Markov Master Equations}
+\author{Garrett Higginbotham}
+\email{ghiggie@uab.edu}
+\affiliation{Department of Physics\\The University of Alabama at Birmingham}
+\date{\today}
+\begin{abstract}
+We derive the Born-Markov equations, with and without the secular approximation.
+\end{abstract}
 
 %% Regular Title Setup
 %
-\title{Notes on the Born-Markov Master Equations}
-\author{Garrett Higginbotham\\ghiggie@uab.edu\\Department of Physics\\The University of Alabama at Birmingham}
+%\title{Notes on the Born-Markov Master Equations}
+%\author{Garrett Higginbotham\\ghiggie@uab.edu\\Department of Physics\\The University of Alabama at Birmingham}
 
 \maketitle
-\tableofcontents
+%\tableofcontents
 
 \section{Closed Systems Formalism}
 
@@ -50,7 +50,7 @@ For all calculations, we use a unit system in which $\hbar = 1$. Consider a bipa
 \begin{equation}\label{ham}
 H_{AB} = H_{AB} + V_{AB}
 \end{equation}
-where $H_{AB} =  H_A\ten\I + \I\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten\I + \I\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
+where $H_{AB} =  H_A\ten\I_B + \I_A\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten\I_B + \I_A\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
 
 We assume that the systems $A$ and $B$, when taken together, form a closed system. In this case, the state of the system evolves under standard von Neumann evolution:
 \begin{equation}\label{vnAB}
@@ -70,11 +70,11 @@ We will now switch from the Schr{\"o}dinger picture to the interaction picture b
 \begin{equation}\label{intpic}
 \til{A}(t) = e^{iH_0t}Ae^{-iH_0t}
 \end{equation}
-where $A$ is an arbitrary operator in the Schr{\"o}dinger picture, and $\til{A}(t)$ is the corresponding operator in the interaction picture. It is stressed that $\til{A}(t)$ is usually time-dependent, even if $A$ is time-independent. An example of them both being time-independent occurs when $\comm{A}{H_0} = 0$, in which case $\til{A}(t) = A$. Further, note that $\til{A}(0) = A$. In the interaction picture, the von Neumann equation is given by
+where $A$ is an arbitrary operator in the Schr{\"o}dinger picture, and $\til{A}(t)$ is the corresponding operator in the interaction picture. It is stressed that $\til{A}(t)$ is usually time-dependent, even if $A$ is time-independent. An example of them both being time-independent occurs when $\comm{A}{H_0} = 0$, in which case $\til{A}(t) = A$. Further, note that $\til{A}(0) = A$ is always true. In the interaction picture, the von Neumann equation is given by
 \begin{equation}\label{intdyn}
 \dv{t}\til{\rho}_{AB}(t) = -i\comm{\til{V}_{AB}(t)}{\til{\rho}_{AB}(t)}
 \end{equation}
-Switching from the Schr{\"o}dinger picture to the interaction picture has the effect of removing the free Hamiltonians from the dynamics, allowing us to focus our attention on the interaction between systems $A$ and $B$. Equation~\ref{intdyn} may be integrated to give
+Switching from the Schr{\"o}dinger picture to the interaction picture has the effect of removing the free Hamiltonians from the dynamics, allowing us to focus our attention on the interaction between systems $A$ and $B$. Equation~\ref{intdyn} may be formally integrated to give
 \begin{equation}\label{tmp}
 \til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) = (-i)\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t_1)}
 \end{equation}
@@ -93,7 +93,7 @@ where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$.
 
 Our goal is to try to extract information regarding system $A$ while ignoring system $B$. Physically, this may simply be because system $B$ has too many degrees of freedom to be feasibly studied, such as the case of an atom coupled to a thermal reservoir. In order to quantify the known information regarding the subsystem $A$, we want to create a density operator $\rho_A$ from the operator $\rho_{AB}$. The map $\rho_{AB}\mapsto\rho_A$ is given by the expression
 \begin{equation}\label{ptra}
-\rho_A = \Ptra{A}{\rho_{AB}}=\sum_{\beta}\qty(\I\ten\bra{\beta})\rho_{AB}\qty(\I\ten\ket{\beta})
+\rho_A = \Ptra{A}{\rho_{AB}}\equiv\sum_{\beta}\qty(\I\ten\bra{\beta})\rho_{AB}\qty(\I\ten\ket{\beta})
 \end{equation}
 where $\{\ket{\beta}\}$ is an orthonormal basis of system $B$. This mapping is called the \textit{partial trace}, taken with respect to system $B$. It can be shown that this mapping is the \textit{unique} mapping that satisfies the three density operator conditions (for a nice proof of this statement, see Box $2.6$ in Nielsen and Chuang, \textit{Quantum Computation and Quantum Information}).
 
@@ -199,12 +199,37 @@ where
 Y_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}\I_i\right)\ten\left(\epsilon_l(k)\left[a_l^{\dag}(k) + a_l(k)\right]\right)\ten\left(\bigotimes_{i=k+1}^{\infty}\I_i\right)\right],\ l = H,C
 \end{equation}
 In terms of our previously defined operators, we have
-
-\begin{tabular}{ll}
-	$A_1 = V_{1,2}$ & $X_1 = \I_H\ten\I_C$ \\ 
-	$A_2 = V_{1,H}\ten\I_2$ & $X_2 = Y_H\ten\I_C$ \\ 
-	$A_3 = \I_1\ten V_{2,C}$ & $X_3 = \I_H\ten Y_C$ \\ 
+\begin{center}
+\begin{tabular}{rl}
+	$A_1 = V_{1,2}$, & $X_1 = \I_H\ten\I_C$ \\ 
+	$A_2 = V_{1,H}\ten\I_2$, & $X_2 = Y_H\ten\I_C$ \\ 
+	$A_3 = \I_1\ten V_{2,C}$, & $X_3 = \I_H\ten Y_C$ \\ 
 \end{tabular} 
+\end{center}
+
+We may now calculate the bath correlation functions $G_{\alpha,\beta}(t_1,t_2)$. When $\alpha\neq\beta$, $G_{\alpha,\beta}(t_1,t_2)=0$ because we defined $\ave{\til{X}_{\alpha}(t)}{\rho_l^G}=0$. Further, we may write $G_{1,1}(t_1,t_2) = 1$. The remaining correlations are
+\begin{align}\label{corr}
+\begin{split}
+G_{2,2}(t_1,t_2) &= \ave{\til{Y}_H(t_1)\til{Y}_H(t_2)}{\rho_H^G}\\
+G_{3,3}(t_1,t_2) &= \ave{\til{Y}_C(t_1)\til{Y}_C()t_2)}{\rho_C^G}
+\end{split}
+\end{align}
+In order to calculate~\ref{corr}, we introduce the Drude-Lorentz model of the bath spectral density as
+\begin{equation}\label{drude}
+J_l(\omega) = \frac{2\lambda_l}{\pi}\frac{\omega\gamma_l}{\omega^2+\gamma_l^2},\ l=H,C
+\end{equation}
+where $\lambda_l$ is the coupling strength between the $l^{th}$ bath and the system, and $\gamma_l$ is the relaxation rate of the $l^{th}$ bath. With this spectral density, the bath correlation functions become
+\begin{equation}\label{bathdrude}
+G_l(t_1,t_2) = 2\lambda_l\gamma_l\left[\cot(\frac{\beta_l\gamma_l}{2}) -i\right]e^{-\gamma_l\tau} + \sum_{n=1}^{\infty} \frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_n}{\nu_n^2-\gamma_l^2}e^{-\nu_n\tau}
+\end{equation}
+where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$.
+
+
+
+
+
+
+
 
 
 
