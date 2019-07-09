@@ -222,10 +222,22 @@ where $\lambda_l$ is the coupling strength between the $l^{th}$ bath and the sys
 \begin{equation}\label{bathdrude}
 G_l(t_1,t_2) = 2\lambda_l\gamma_l\left[\cot(\frac{\beta_l\gamma_l}{2}) -i\right]e^{-\gamma_l\tau} + \sum_{n=1}^{\infty} \frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_n}{\nu_n^2-\gamma_l^2}e^{-\nu_n\tau}
 \end{equation}
-where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$.
+where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$. Equation~\ref{redfield} now becomes
+\begin{align}\label{redfieldsimple}
+\begin{split}
+\til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha=1}^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha}(t_1,t_2)\right.\\
+&\left.+\left[\til{\rho}_A(t)\til{A}_{\alpha}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\alpha}^{\dag}(t_2)\right]G_{\alpha}^{*}(t_1,t_2)\right\}
+\end{split}
+\end{align}
+where $G_1(t_1,t_2) = 1$, $G_2(t_1,t_2) = G_H(t_1,t_2)$, and $G_3(t_1,t_2) = G_C(t_1,t_2)$, as defined in equation~\ref{bathdrude}.
 
-
-
+We now introduce a representation for the operators in equation~\ref{redfieldsimple}. Let $S = \{\ket{00},\ket{01},\ket{10},\ket{11}\}$ denote the eigenbasis for $H_A$, so that $\forall \ket{i}\in S$, $H_A\ket{i} = H_A^i\ket{i}$. In this basis, equation~\ref{redfieldsimple} becomes
+\begin{align}\label{nolube}
+\begin{split}
+\til{\rho}_A^{m,n}(t+\dd{t}) - \til{\rho}_A^{m,n}(t) = &(-i)^2\sum_{\substack{\alpha=1\\\ket{j},\ket{l}\in S}}^{\alpha=3}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[e^{-iH_A^mt_1+iH_A^jt_1-iH_A^jt_2+iH_A^lt_2}A_{\alpha}^{m,j}A_{\alpha}^{\dag,j,l}\til{\rho}_A^{l,n}(t)\right.\right.\\
+&\left.\left.-e^{-iH_A^mt_2+iH_A^jt_2-iH_A^lt_1+iH_A^nt_1}A_{\alpha}^{\dag,m,j}\til{\rho}_A^{j,l}(t)A_{\alpha}^{l,n}\right]G_{\alpha}(t_1,t_2) + HC^{m,n}\right\}
+\end{split}
+\end{align}
 
 
 
