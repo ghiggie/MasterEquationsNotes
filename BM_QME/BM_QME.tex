@@ -48,9 +48,9 @@ We derive the Born-Markov equations, with and without the secular approximation.
 
 For all calculations, we use a unit system in which $\hbar = 1$. Consider a bipartite system consisting of subsystems $A$ and $B$, each of which are possibly multipartite. We write the Hamiltonian of the entire system as
 \begin{equation}\label{ham}
-H_{AB} = H_{AB} + V_{AB}
+H_{AB} = H_0 + V_I
 \end{equation}
-where $H_{AB} =  H_A\ten\I_B + \I_A\ten H_B$ is the free Hamiltonian for systems $A$ and $B$, and where $V_{AB} = V_A\ten\I_B + \I_A\ten V_B + V_I$ entails possible intra-system interactions $V_A$ and $V_B$, as well as a possible inter-system interaction $V_{AB}$ that mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
+where $H_0 =  (H_A+V_A)\ten\I_B + \I_A\ten (H_B+V_B)$ is the free Hamiltonian for systems $A$ and $B$, and where $V_I$ mediates the shared behavior between the systems. For now we will only consider the case in which the total Hamiltonian is time-independent, reserving the time-dependent case for a later analysis.
 
 We assume that the systems $A$ and $B$, when taken together, form a closed system. In this case, the state of the system evolves under standard von Neumann evolution:
 \begin{equation}\label{vnAB}
@@ -72,22 +72,22 @@ We will now switch from the Schr{\"o}dinger picture to the interaction picture b
 \end{equation}
 where $A$ is an arbitrary operator in the Schr{\"o}dinger picture, and $\til{A}(t)$ is the corresponding operator in the interaction picture. It is stressed that $\til{A}(t)$ is usually time-dependent, even if $A$ is time-independent. An example of them both being time-independent occurs when $\comm{A}{H_0} = 0$, in which case $\til{A}(t) = A$. Further, note that $\til{A}(0) = A$ is always true. In the interaction picture, the von Neumann equation is given by
 \begin{equation}\label{intdyn}
-\dv{t}\til{\rho}_{AB}(t) = -i\comm{\til{V}_{AB}(t)}{\til{\rho}_{AB}(t)}
+\dv{t}\til{\rho}_{AB}(t) = -i\comm{\til{V}_I(t)}{\til{\rho}_{AB}(t)}
 \end{equation}
 Switching from the Schr{\"o}dinger picture to the interaction picture has the effect of removing the free Hamiltonians from the dynamics, allowing us to focus our attention on the interaction between systems $A$ and $B$. Equation~\ref{intdyn} may be formally integrated to give
 \begin{equation}\label{tmp}
-\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) = (-i)\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t_1)}
+\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) = (-i)\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t_1)}
 \end{equation}
-Unfortunately, the right hand side of equation~\ref{tmp} still contains $\til{\rho}_{AB}(t)$, so it isn't particularly useful. However, we may recursively substitute equation~\ref{intdyn} into equation~\ref{tmp} to obtain
+Unfortunately, the right hand side of equation~\ref{tmp} still contains $\til{\rho}_{AB}(t)$ at an intermediate time value, so it isn't particularly useful. However, we may recursively substitute equation~\ref{intdyn} into equation~\ref{tmp} to obtain
 \begin{align}\label{totintpert}
 \begin{split}
-\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\comm{\til{V}_{AB}(t_3)}{\til{\rho}_{AB}(t)}}}\\
+\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\comm{\til{V}_I(t_3)}{\til{\rho}_{AB}(t)}}}\\
 &+\ldots
 \end{split}
 \end{align}
-where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$.
+where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$. Note that our dynamics now only depends on the value of $\til{\rho}_{AB}(t)$ at the beginning of the interval.
 
 \section{Open Formalism from Closed Formalism}
 
@@ -102,12 +102,12 @@ BRIEFLY DISCUSS THE PROPERTIES OF PARTIAL TRACE
 	\item $\Ptra{A}{\Ptra{B}{\rho_{AB}}} = \Ptra{B}{\Ptra{A}{\rho_{AB}}} = \Tra{\rho_{AB}}$
 \end{enumerate}
 
-We will now apply the partial trace to the von Neumann evolution in the interaction picture in an attempt to derive the dynamics for $\til{\rho}_A(t)$. It can be shown (see Appendix) that the order of applying partial trace and interaction picture is irrelevant, so that we can safely obtain the correct dynamics by first computing the interaction picture density operator and then applying the partial trace. Applying partial trace, we obtain
+We will now apply the partial trace to the von Neumann evolution in the interaction picture in an attempt to derive the dynamics for $\til{\rho}_A(t)$. It can be shown (see Appendix) that the order of applying partial trace and interaction picture is irrelevant, so that we can safely obtain the correct dynamics by first computing the interaction picture density operator and then applying the partial trace, instead of going the other direction. Applying partial trace, we obtain
 \begin{align}\label{partintpert}
 \begin{split}
-\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}}\\
-&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\comm{\til{V}_{AB}(t_3)}{\til{\rho}_{AB}(t)}}}}\\
+\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}}\\
+&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\comm{\til{V}_I(t_3)}{\til{\rho}_{AB}(t)}}}}\\
 &+\ldots
 \end{split}
 \end{align}
@@ -120,21 +120,21 @@ where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$. Everything to this po
 In the weak coupling approximation, we truncate the higher-order terms in~\ref{partintpert}. The lowest non-trivial truncation leads to the equation
 \begin{align}\label{truncdyn}
 \begin{split}
-\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_{AB}(t_1)}{\comm{\til{V}_{AB}(t_2)}{\til{\rho}_{AB}(t)}}}
+\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}}\\
+&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}}
 \end{split}
 \end{align}
 The reason that this is the lowest non-trivial truncation is because further truncation leaves us with standard von Neumann dynamics in the interaction picture.
 
-Before we move further, we make the assumption that the inter-system interaction $V_{AB}$ takes on a bilinear form
+Before we move further, we make the assumption that the inter-system interaction $V_I$ takes on a bilinear form
 \begin{equation}\label{coup}
-V_{AB} = \sum_{\alpha} A_{\alpha}\ten X_{\alpha}
+V_I = \sum_{\alpha} A_{\alpha}\ten X_{\alpha}
 \end{equation}
-This further forces $V_I$ to take on a bilinear form. Although we require that $V_{AB}$ be Hermitian, we do not necessarily require that $A_{\alpha}$ and $X_{\alpha}$ be Hermitian. We simply require that if $A_{\alpha}\ten X_{\alpha}$ is in the summation, then there exists an index $\beta$ such that $A_{\beta}^{\dag}\ten X_{\beta}^{\dag}$ is also in the summation (for example, consider $V_{AB} = \sigma^{\dag}\ten X + \sigma\ten X^{\dag}$, where $\sigma$ and $X$ are not necessarily Hermitian). With this setup, we write
+Although we require that $V_I$ be Hermitian, we do not necessarily require that $A_{\alpha}$ and $X_{\alpha}$ be Hermitian. We simply require that if $A_{\alpha}\ten X_{\alpha}$ is in the summation, then there exists an index $\beta$ such that $A_{\beta}^{\dag}\ten X_{\beta}^{\dag}$ is also in the summation (for example, consider $V_I = \sigma^{\dag}\ten X + \sigma\ten X^{\dag}$, where $\sigma$ and $X$ are not necessarily Hermitian). With this setup, we write
 \begin{equation}\label{coupdag}
-V_{AB} = \sum_{\beta} A_{\beta}^{\dag}\ten X_{\beta}^{\dag}
+V_I^{\dag} = \sum_{\beta} A_{\beta}^{\dag}\ten X_{\beta}^{\dag} = V_I
 \end{equation}
-We will use equation~\ref{coup} for $\til{V}_{AB}(t_1)$ and equation~\ref{coupdag} for $\til{V}_{AB}(t_2)$. (We should explicitly compute the interaction picture versions of $\til{V}_{AB}$.) Substituting these into equation~\ref{truncdyn}, we obtain
+We will use equation~\ref{coup} for $\til{V}_I(t_1)$ and equation~\ref{coupdag} for $\til{V}_I(t_2)$. (We should explicitly compute the interaction picture versions of $\til{V}_I$, but it should also be trivial.) Substituting these into equation~\ref{truncdyn}, we obtain
 \begin{align}\label{ugh}
 \begin{split}
 \til{\rho}_{A}(t+\dd{t}) - &\til{\rho}_{A}(t) = (-i)^1\sum_{\alpha}\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{A}_{\alpha}(t_1)\ten \til{X}_{\alpha}(t_1)}{\til{\rho}_{AB}(t)}}\\
@@ -179,11 +179,11 @@ where $G_{\alpha,\beta}(t_1,t_2) =\ave{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\da
 
 \section{Symmetric Spin-Boson Model}
 
-We will consider the case of two qubits coupled to two baths. Each qubit is coupled to a separate bath, and the qubits themselves are coupled together. The free Hamiltonian of the entire system may be written as
+We will consider the case of two qubits coupled to two baths. The total Hilbert space is $\mathcal{H} = \mathcal{H}^1\ten\mathcal{H}^2\ten\mathcal{H}^H\ten\mathcal{H}^C$. Each qubit is coupled to a separate bath, and the qubits themselves are coupled together. The free Hamiltonian of the entire system may be written as
 \begin{align}\label{freeham}
 \begin{split}
-H_0 &= (H_1\ten \I_2 + \I_1\ten H_2)\ten(\I_H\ten \I_C) + (\I_1\ten \I_2)\ten\left[H_H\ten \I_C + \I_H\ten H_C\right]\\
-&= H_A\ten \I_B + \I_A\ten H_B
+H_0 &= (H_1\ten \I_2 + \I_1\ten H_2 + V_{1,2})\ten(\I_H\ten \I_C) + (\I_1\ten \I_2)\ten\left[H_H\ten \I_C + \I_H\ten H_C\right]\\
+&= (H_A+V_A)\ten \I_B + \I_A\ten H_B
 \end{split}
 \end{align}
 We keep the Hamiltonian for the qubits general, but we assume that the baths are composed of an infinite number of non-interacting quantum harmonic oscillators, so that the Hamiltonians of the baths may be written as
@@ -192,31 +192,32 @@ H_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}\I_i\right)\ten\left(\omega_l(k) a
 \end{equation}
 The coupling term is written as
 \begin{equation}\label{modcoup}
-V_{AB} = V_{1,2}\ten\left(\I_H\ten \I_C\right) + \left(V_{1,H}\ten \I_2\right)\ten\left(Y_H\ten \I_C\right) + \left(\I_1\ten V_{2,C}\right)\ten\left(\I_H\ten Y_C\right)
+V_I = \left(V_{1,H}\ten \I_2\right)\ten\left(Y_H\ten \I_C\right) + \left(\I_1\ten V_{2,C}\right)\ten\left(\I_H\ten Y_C\right)
 \end{equation}
 where
 \begin{equation}\label{yl}
 Y_l = \sum_k\left[\left(\bigotimes_{i=1}^{k-1}\I_i\right)\ten\left(\epsilon_l(k)\left[a_l^{\dag}(k) + a_l(k)\right]\right)\ten\left(\bigotimes_{i=k+1}^{\infty}\I_i\right)\right],\ l = H,C
 \end{equation}
 In terms of our previously defined operators, we have
-\begin{center}
-\begin{tabular}{rl}
-	$A_1 = V_{1,2}$, & $X_1 = \I_H\ten\I_C$ \\ 
-	$A_2 = V_{1,H}\ten\I_2$, & $X_2 = Y_H\ten\I_C$ \\ 
-	$A_3 = \I_1\ten V_{2,C}$, & $X_3 = \I_H\ten Y_C$ \\ 
-\end{tabular} 
-\end{center}
+\begin{align}\label{AXop}
+\begin{split}
+	A_1 &= V_{1,H}\ten \I_2\\
+	X_2 &= Y_H\ten \I_C\\ 
+	A_2 &= \I_1\ten V_{2,C}\\
+	X_3 &= \I_H\ten Y_C
+\end{split} 
+\end{align}
 
-We may now calculate the bath correlation functions $G_{\alpha,\beta}(t_1,t_2)$. When $\alpha\neq\beta$, $G_{\alpha,\beta}(t_1,t_2)=0$ because we defined $\ave{\til{X}_{\alpha}(t)}{\rho_l^G}=0$. Further, we may write $G_{1,1}(t_1,t_2) = 1$. The remaining correlations are
+We may now calculate the bath correlation functions $G_{\alpha,\beta}(t_1,t_2)$. When $\alpha\neq\beta$, $G_{\alpha,\beta}(t_1,t_2)=0$ because we defined $\ave{\til{X}_{\alpha}(t)}{\rho_l^G}=0$. The remaining correlations are
 \begin{align}\label{corr}
 \begin{split}
-G_{2,2}(t_1,t_2) &= \ave{\til{Y}_H(t_1)\til{Y}_H(t_2)}{\rho_H^G}\\
-G_{3,3}(t_1,t_2) &= \ave{\til{Y}_C(t_1)\til{Y}_C()t_2)}{\rho_C^G}
+G_{1,1}(t_1,t_2) &= \ave{\til{Y}_H(t_1)\til{Y}_H(t_2)}{\rho_H^G}=G_H(t_1,t_2) = G_1(t_1,t_2)\\
+G_{2,2}(t_1,t_2) &= \ave{\til{Y}_C(t_1)\til{Y}_C()t_2)}{\rho_C^G}=G_C(t_1,t_2) = G_2(t_1,t_2)
 \end{split}
 \end{align}
 In order to calculate~\ref{corr}, we introduce the Drude-Lorentz model of the bath spectral density as
 \begin{equation}\label{drude}
-J_l(\omega) = \frac{2\lambda_l}{\pi}\frac{\omega\gamma_l}{\omega^2+\gamma_l^2},\ l=H,C
+J_l(\omega) = \frac{2\lambda_l}{\pi}\frac{\omega\gamma_l}{\omega^2+\gamma_l^2},\ l=1,2
 \end{equation}
 where $\lambda_l$ is the coupling strength between the $l^{th}$ bath and the system, and $\gamma_l$ is the relaxation rate of the $l^{th}$ bath. With this spectral density, the bath correlation functions become
 \begin{equation}\label{bathdrude}
@@ -225,24 +226,13 @@ G_l(t_1,t_2) = 2\lambda_l\gamma_l\left[\cot(\frac{\beta_l\gamma_l}{2}) -i\right]
 where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$. Equation~\ref{redfield} now becomes
 \begin{align}\label{redfieldsimple}
 \begin{split}
-\til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha=1}^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha}(t_1,t_2)\right.\\
+\til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha=1}^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha}(t_1,t_2)\right.\\
 &\left.+\left[\til{\rho}_A(t)\til{A}_{\alpha}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\alpha}^{\dag}(t_2)\right]G_{\alpha}^{*}(t_1,t_2)\right\}
 \end{split}
 \end{align}
-where $G_1(t_1,t_2) = 1$, $G_2(t_1,t_2) = G_H(t_1,t_2)$, and $G_3(t_1,t_2) = G_C(t_1,t_2)$, as defined in equation~\ref{bathdrude}.
+where $G_{\alpha}(t_1,t_2)$ as defined in equation~\ref{bathdrude}.
 
-We now introduce a representation for the operators in equation~\ref{redfieldsimple}. Let $S = \{\ket{00},\ket{01},\ket{10},\ket{11}\}$ denote the eigenbasis for $H_A$, so that $\forall \ket{i}\in S$, $H_A\ket{i} = H_A^i\ket{i}$. In this basis, equation~\ref{redfieldsimple} becomes
-\begin{align}\label{nolube}
-\begin{split}
-\til{\rho}_A^{m,n}(t+\dd{t}) - \til{\rho}_A^{m,n}(t) = &(-i)^2\sum_{\substack{\alpha=1\\\ket{j},\ket{l}\in S}}^{\alpha=3}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[e^{-iH_A^mt_1+iH_A^jt_1-iH_A^jt_2+iH_A^lt_2}A_{\alpha}^{m,j}A_{\alpha}^{\dag,j,l}\til{\rho}_A^{l,n}(t)\right.\right.\\
-&\left.\left.-e^{-iH_A^mt_2+iH_A^jt_2-iH_A^lt_1+iH_A^nt_1}A_{\alpha}^{\dag,m,j}\til{\rho}_A^{j,l}(t)A_{\alpha}^{l,n}\right]G_{\alpha}(t_1,t_2) + HC^{m,n}\right\}
-\end{split}
-\end{align}
-
-
-
-
-
+\subsection{Computational Algorithm}
 
 
 \end{document}
