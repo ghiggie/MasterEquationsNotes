@@ -223,15 +223,7 @@ where $\lambda_l$ is the coupling strength between the $l^{th}$ bath and the sys
 \begin{equation}\label{bathdrude}
 G_l(t_1,t_2) = 2\lambda_l\gamma_l\left[\cot(\frac{\beta_l\gamma_l}{2}) -i\right]e^{-\gamma_l\tau} + \sum_{n=1}^{\infty} \frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_n}{\nu_n^2-\gamma_l^2}e^{-\nu_n\tau}
 \end{equation}
-where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$. This series is not easily done numerically. Because of the exponential decay, we can just compute the bulk of the series, and approximate the tail of the series as a delta function of $\tau$. For now, we will only include one Matsubara term, so that we can approximate our series as
-\begin{equation}\label{corrapprox}
-G_l(t_1,t_2) = G_l(\tau) = 2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamma_l}{2}\right)-i\right]e^{-\gamma_l\tau}+\frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_1}{\mu_1^2-\gamma_l^2}e^{-\mu_1\tau}+\left[\frac{4\lambda_l}{\beta_l\gamma_l}-2\lambda_l\cot\left(\frac{\beta_l\gamma_l}{2}\right) - \frac{8\lambda_l\gamma_l\beta_l}{(2\pi)^2-(\beta_l\gamma_l)^2}\delta(\tau)
-\end{equation}
-
-
-
-
-Equation~\ref{redfield} now becomes
+where $\nu_n = \frac{2\pi}{\beta_l}n$ and $\tau = t_1-t_2$. Equation~\ref{redfield} now becomes
 \begin{align}\label{redfieldsimple}
 \begin{split}
 \til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha=1}^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\alpha}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha}(t_1,t_2)\right.\\
@@ -239,6 +231,14 @@ Equation~\ref{redfield} now becomes
 \end{split}
 \end{align}
 where $G_{\alpha}(t_1,t_2)$ as defined in equation~\ref{bathdrude}.
+
+The series in~\ref{bathdrude} is not easily done numerically. Because of the exponential decay, we can just compute the bulk of the series, and approximate the tail of the series as a delta function of $\tau$. For now, we will only include one Matsubara term, so that we can approximate our series as
+\begin{align}\label{corrapprox}
+\begin{split}
+G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamma_l}{2}\right)-i\right]e^{-\gamma_l\tau}+\frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_1}{\nu_1^2-\gamma_l^2}e^{-\nu_1\tau}\\
+&+\left[\frac{4\lambda_l}{\beta_l\gamma_l}-2\lambda_l\cot\left(\frac{\beta_l\gamma_l}{2}\right) - \frac{8\lambda_l\gamma_l\beta_l}{(2\pi)^2-(\beta_l\gamma_l)^2}\right]\delta(\tau)
+\end{split}
+\end{align}
 
 \subsection{Computational Algorithm}
 
