@@ -240,7 +240,36 @@ G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamm
 \end{split}
 \end{align}
 
-\subsection{Computational Algorithm}
+\section{Results}
 
+Code has been written that can compute the dynamics of any finite-dimensional Hamiltonian coupled to a single spin-boson bath. In the future, the code will be strengthened so that it can easily handle an arbitrary number of spin-boson baths without potentially problematic rescripting.
+
+We first consider a single qubit coupled to a single spin-boson bath. The Hamiltonian for the qubit is given by $H_0 = \sigma_z$ and the interaction between the bath and system is mediated by $V_I = \lambda\sigma_x$, where we use $\lambda=0.1$. Further, we use a temperature of $T=1.0$ and $\gamma=0.1$. The initial density matrix is given by
+$$\rho(0) =
+\begin{pmatrix}
+	1 & 0 \\ 
+	0 & 0
+\end{pmatrix}$$
+The population dynamics are illustrated in \ref{fig:q1b1}.
+
+\begin{figure}[h]
+	\includegraphics[scale=0.5]{plotQ1B1.pdf}
+	\label{fig:q1b1}
+\end{figure}
+
+We next consider a system of two entangled qubits, in which a single qubit is coupled to a spin-boson bath. The Hamiltonian for the qubit system is given by $$H_0 = \frac{1}{2}\sigma_z\ten\I + \frac{1}{2}\I\ten\sigma_z + \left(\sigma^+\ten\sigma^-+\sigma^-\ten\sigma^+\right).$$The interaction between the system and the bath is mediated by $$V_I = \lambda\I\ten\sigma_x$$where we again use $\lambda=0.1$. As before, we take $T=1.0$ and $gamma=0.1$. The initial density matrix is given by
+$$rho(0) =
+\begin{pmatrix}
+0 & 0 & 0 & 0 \\ 
+0 & 1 & 0 & 0 \\ 
+0 & 0 & 0 & 0 \\ 
+0 & 0 & 0 & 0
+\end{pmatrix}$$
+The population dynamics are illustrated in \ref{fig:q2b2}.
+
+\begin{figure}[h]
+	\includegraphics[scale=0.5]{plotQ2B1.pdf}
+	\label{fig:q2b2}
+\end{figure}
 
 \end{document}
