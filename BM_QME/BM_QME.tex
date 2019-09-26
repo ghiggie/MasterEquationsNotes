@@ -1,5 +1,5 @@
-\documentclass[aps, prl, preprint]{revtex4-1}
-%\documentclass{article}
+%\documentclass[aps, prl, preprint]{revtex4-1}
+\documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -25,22 +25,22 @@
 
 %% RevTeX 4.1 Title Setup
 
-\title{Notes on the Born-Markov Master Equations}
-\author{Garrett Higginbotham}
-\email{ghiggie@uab.edu}
-\affiliation{Department of Physics\\The University of Alabama at Birmingham}
-\date{\today}
-\begin{abstract}
-We derive the Born-Markov equations, with and without the secular approximation.
-\end{abstract}
+%\title{Notes on the Born-Markov Master Equations}
+%\author{Garrett Higginbotham}
+%\email{ghiggie@uab.edu}
+%\affiliation{Department of Physics\\The University of Alabama at Birmingham}
+%\date{\today}
+%\begin{abstract}
+%We derive the Born-Markov equations, with and without the secular approximation.
+%\end{abstract}
 
 %% Regular Title Setup
-%
-%\title{Notes on the Born-Markov Master Equations}
-%\author{Garrett Higginbotham\\ghiggie@uab.edu\\Department of Physics\\The University of Alabama at Birmingham}
+
+\title{Notes on the Born-Markov Master Equations}
+\author{Garrett Higginbotham\\ghiggie@uab.edu\\Department of Physics\\The University of Alabama at Birmingham}
 
 \maketitle
-%\tableofcontents
+\tableofcontents
 
 \section{Closed Systems Formalism}
 
@@ -76,18 +76,13 @@ where $A$ is an arbitrary operator in the Schr{\"o}dinger picture, and $\til{A}(
 \end{equation}
 Switching from the Schr{\"o}dinger picture to the interaction picture has the effect of removing the free Hamiltonians from the dynamics, allowing us to focus our attention on the interaction between systems $A$ and $B$. Equation~\ref{intdyn} may be formally integrated to give
 \begin{equation}\label{tmp}
-\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) = (-i)\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t_1)}
+\til{\rho}_{AB}(t) = \til{\rho}_{AB}(0) + (-i)\int_0^{t}\dd{t_1}\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t_1)}
 \end{equation}
-Unfortunately, the right hand side of equation~\ref{tmp} still contains $\til{\rho}_{AB}(t)$ at an intermediate time value, so it isn't particularly useful. However, we may recursively substitute equation~\ref{intdyn} into equation~\ref{tmp} to obtain
-\begin{align}\label{totintpert}
-\begin{split}
-\til{\rho}_{AB}(t+\dd{t}) - \til{\rho}_{AB}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\comm{\til{V}_I(t_3)}{\til{\rho}_{AB}(t)}}}\\
-&+\ldots
-\end{split}
-\end{align}
-where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$. Note that our dynamics now only depends on the value of $\til{\rho}_{AB}(t)$ at the beginning of the interval.
+Unfortunately, the right hand side of equation~\ref{tmp} still contains $\til{\rho}_{AB}(t)$ at an intermediate time value, so it isn't particularly useful. However, we may substitute equation~\ref{tmp} into equation~\ref{intdyn} to obtain
+\begin{equation}\label{totintpert}
+\dv{t}\til{\rho}_{AB}(t) = (-i)\comm{\til{V_I}(t)}{\til{\rho}_{AB}(0)} + (-i)^2\int_0^{t}\dd{t_1}\comm{\til{V_I}(t)}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t_1)}}.
+\end{equation}
+This will serve as the starting point for our upcoming approximations.
 
 \section{Open Formalism from Closed Formalism}
 
@@ -103,28 +98,12 @@ BRIEFLY DISCUSS THE PROPERTIES OF PARTIAL TRACE
 \end{enumerate}
 
 We will now apply the partial trace to the von Neumann evolution in the interaction picture in an attempt to derive the dynamics for $\til{\rho}_A(t)$. It can be shown (see Appendix) that the order of applying partial trace and interaction picture is irrelevant, so that we can safely obtain the correct dynamics by first computing the interaction picture density operator and then applying the partial trace, instead of going the other direction. Applying partial trace, we obtain
-\begin{align}\label{partintpert}
-\begin{split}
-\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}}\\
-&+(-i)^3\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\int_t^{t_2}\dd{t_3}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\comm{\til{V}_I(t_3)}{\til{\rho}_{AB}(t)}}}}\\
-&+\ldots
-\end{split}
-\end{align}
-where $t+\dd{t}\geq t_1\geq t_2\geq t_3\geq \ldots\geq t$. Everything to this point has been exact, and we are ready to begin making assumptions and approximations about the model.
+\begin{equation}\label{partintpert}
+\dv{t}\Ptra{B}{\til{\rho}_{AB}(t)} = (-i)\Ptra{B}{\comm{\til{V_I}(t)}{\til{\rho}_{AB}(0)}} + (-i)^2\int_0^{t}\dd{t_1}\Ptra{B}{\comm{\til{V_I}(t)}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t_1)}}}.
+\end{equation}
+Everything to this point has been exact, and we are ready to begin making assumptions and approximations about the model.
 
 \section{Approximations}
-
-\subsection{Weak Coupling Approximation}
-
-In the weak coupling approximation, we truncate the higher-order terms in~\ref{partintpert}. The lowest non-trivial truncation leads to the equation
-\begin{align}\label{truncdyn}
-\begin{split}
-\til{\rho}_{A}(t+\dd{t}) - \til{\rho}_{A}(t) &= (-i)^1\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{V}_I(t_1)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^2\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{V}_I(t_1)}{\comm{\til{V}_I(t_2)}{\til{\rho}_{AB}(t)}}}
-\end{split}
-\end{align}
-The reason that this is the lowest non-trivial truncation is because further truncation leaves us with standard von Neumann dynamics in the interaction picture.
 
 Before we move further, we make the assumption that the inter-system interaction $V_I$ takes on a bilinear form
 \begin{equation}\label{coup}
@@ -134,11 +113,11 @@ Although we require that $V_I$ be Hermitian, we do not necessarily require that 
 \begin{equation}\label{coupdag}
 V_I^{\dag} = \sum_{\beta} A_{\beta}^{\dag}\ten X_{\beta}^{\dag} = V_I
 \end{equation}
-We will use equation~\ref{coup} for $\til{V}_I(t_1)$ and equation~\ref{coupdag} for $\til{V}_I(t_2)$. (We should explicitly compute the interaction picture versions of $\til{V}_I$, but it should also be trivial.) Substituting these into equation~\ref{truncdyn}, we obtain
+We will use equation~\ref{coup} for $\til{V}_I(t)$ and equation~\ref{coupdag} for $\til{V}_I(t_1)$. (We should explicitly compute the interaction picture versions of $\til{V}_I$, but it should also be trivial.) Substituting these into equation~\ref{partintpert}, we obtain
 \begin{align}\label{ugh}
 \begin{split}
-\til{\rho}_{A}(t+\dd{t}) - &\til{\rho}_{A}(t) = (-i)^1\sum_{\alpha}\int_t^{t+\dd{t}}\dd{t_1}\Ptra{B}{\comm{\til{A}_{\alpha}(t_1)\ten \til{X}_{\alpha}(t_1)}{\til{\rho}_{AB}(t)}}\\
-&+(-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\Ptra{B}{\comm{\til{A}_{\alpha}(t_1)\ten \til{X}_{\alpha}(t_1)}{\comm{\til{A}_{\beta}^{\dag}(t_2)\ten \til{X}_{\beta}^{\dag}(t_2)}{\til{\rho}_{AB}(t)}}}
+\dv{t}\Ptra{B}{\til{\rho}_{AB}(t)} &= (-i)\sum_{\alpha}\Ptra{B}{\comm{\til{A}_{\alpha}(t)\ten\til{X}_{\alpha}(t)}{\til{\rho}_{AB}(0)}}\\
+&+ (-i)^2\sum_{\alpha,\beta}\int_0^{t}\dd{t_1}\Ptra{B}{\comm{\til{A}_{\alpha}(t)\ten\til{X}_{\alpha}(t)}{\comm{\til{A}^{\dag}_{\beta}(t_1)\ten\til{X}_{\beta}^{\dag}(t_1)}{\til{\rho}_{AB}(t_1)}}}
 \end{split}
 \end{align}
 
@@ -148,33 +127,54 @@ We assume that system $B$ has many, many more degrees of freedom than system $A$
 \begin{equation}\label{born}
 \rho_{AB}(t) = \rho_A(t)\ten\rho_B(t) + \rho_{corr}(t)\approx \rho_A(t)\ten\rho_B^G
 \end{equation}
-Substituting \ref{born} into \ref{truncdyn} and expanding the Kronecker products, we obtain
+Substituting \ref{born} into \ref{ugh} and expanding the Kronecker products and partial traces, we obtain
 \begin{align}\label{fuckmyass}
 \begin{split}
-\til{\rho}_A(t+\dd{t})-&\til{\rho}_A(t) = (-i)^1\sum_{\alpha}\int_t^{t+\dd{t}} \left\{\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\ave{\til{X}_{\alpha}(t_1)}{\rho_B^G}\right\}\\
-&+(-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left[\til{A}_{\alpha}(t_1)\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha,\beta}(t_1,t_2)\\
-&+\left[\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\right]G_{\alpha,\beta}^{*}(t_1,t_2)
+\dv{t}\til{\rho}_A(t) &= (-i)\sum_{\alpha}\comm{\til{A}_{\alpha}(t)}{\til{\rho}_A(t)}\ave{\til{X}_{\alpha}(t)}{\rho_B^G}\\
+&+ (-i)^2\sum_{\alpha,\beta}\int_0^t\dd{t_1}\left\{\comm{\til{A}_{\alpha}(t)}{\til{A}_{\beta}^{\dag}(t_1)\til{\rho}_A(t_1)}G_{\alpha\beta}(t,t_1)-\comm{\til{A}_{\alpha}(t)}{\til{\rho}_A(t_1)\til{A}_{\beta}^{\dag}(t_1)}G_{\alpha\beta}^*(t,t_1)\right\}
 \end{split}
 \end{align}
-where $G_{\alpha,\beta}(t_1,t_2) =\ave{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\dag}(t_2)}{\rho_B^G}= \Tra{\til{X}_{\alpha}(t_1)\til{X}_{\beta}^{\dag}(t_2)\rho_B^G}$. This dynamical equation is called the Redfield equation. By redefining the zero-point energy of the bath, we can always set $\ave{\til{X}_{\alpha}(t_1)}{\rho_B^G} = 0$, so that the Redfield equation becomes
+where $G_{\alpha,\beta}(t,t_1) =\ave{\til{X}_{\alpha}(t)\til{X}_{\beta}^{\dag}(t_1)}{\rho_B^G}= \Tra{\til{X}_{\alpha}(t)\til{X}_{\beta}^{\dag}(t_1)\rho_B^G}$. By redefining the zero-point energy of the bath, we can always set $\ave{\til{X}_{\alpha}(t)}{\rho_B^G} = 0$, so that the Redfield equation becomes
 \begin{align}\label{redfield}
-\begin{split}
-\til{\rho}_A(t+\dd{t})-\til{\rho}_A(t) &= (-i)^2\sum_{\alpha,\ \beta}\int_t^{t+\dd{t}}\dd{t_1}\int_t^{t_1}\dd{t_2}\left\{\left[\til{A}_{\alpha}(t_1)\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)-\til{A}_{\beta}^{\dag}(t_2)\til{\rho}_A(t)\til{A}_{\alpha}(t_1)\right]G_{\alpha,\beta}(t_1,t_2)\right.\\
-&\left.+\left[\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\til{A}_{\alpha}(t_1)-\til{A}_{\alpha}(t_1)\til{\rho}_A(t)\til{A}_{\beta}^{\dag}(t_2)\right]G_{\alpha,\beta}^{*}(t_1,t_2)\right\}
-\end{split}
+\dv{t}\til{\rho}_A(t) = (-i)^2\sum_{\alpha,\beta}\int_0^t\dd{t_1}\left\{\comm{\til{A}_{\alpha}(t)}{\til{A}_{\beta}^{\dag}(t_1)\til{\rho}_A(t_1)}G_{\alpha\beta}(t,t_1)-\comm{\til{A}_{\alpha}(t)}{\til{\rho}_A(t_1)\til{A}_{\beta}^{\dag}(t_1)}G_{\alpha\beta}^*(t,t_1)\right\}
 \end{align}
 
 \subsection{Markov Approximation}
 
+We now introduce the Markov Approximation by writing
+\begin{equation}\label{markov}
+\til{\rho}_A(t_1) = \til{\rho}_A(t) + (t_1-t)\dv{t}\til{\rho}_A(t)+\ldots \approx \til{\rho}_A(t).
+\end{equation}
+This approximation is justified in the weak coupling limit because $\dv{t}\til{\rho}_A(t)$ is second order in the coupling strength. Inserting this into equation~\ref{redfield} and factoring out the operators that are independent of $t_1$, we obtain
+\begin{equation}\label{redfieldnointegral}
+\dv{t}\til{\rho}_A(t) = -\sum_{\alpha,\beta}\comm{\til{A}_{\alpha}(t)}{\til{\Lambda}_{\alpha\beta}(t)\til{\rho}_A(t) - \til{\rho}_A(t)\til{\Lambda}_{\alpha\beta}^{\dag}(t)}
+\end{equation}
+where
+\begin{equation}\label{Lambdaint}
+\til{\Lambda}_{\alpha\beta}(t) = \int_o^t\dd{t_1} \til{A}_{\beta}^{\dag}(t_1)G_{\alpha\beta}(t,t_1)
+\end{equation}
+Equation~\ref{redfieldnointegral} is called the \textit{Redfield} equation.
 
+\section{Conversion to Schr{\"o}dinger Picture}
 
-
-
-
-\subsection{Secular Approximation}
-
-
-
+We will now convert equation~\ref{redfieldnointegral} to the Schr{\"o}dinger picture by using equation~\ref{intpic}. Direct calculation yields the following conversions from the interaction picture to the Schr{\"o}dinger picture:
+\begin{equation}\label{p1}
+\dv{t}\til{\rho}_A(t) = e^{iH_At}\left\{i\comm{H_A}{\rho_A(t)}+\dv{t}\rho_A(t)\right\}
+\end{equation}
+\begin{equation}\label{p2}
+\comm{\til{A}_{\alpha}(t)}{\til{\Lambda}_{\alpha\beta}(t)\til{\rho}_A(t)} = e^{iH_At}\comm{A_{\alpha}}{\Lambda_{\alpha\beta}(t)\rho_A(t)}e^{-iH_At}
+\end{equation}
+\begin{equation}\label{p3}
+\comm{\til{A}_{\alpha}(t)}{\til{\rho}_A(t)\til{\Lambda}_{\alpha\beta}^{\dag}(t)} = e^{iH_At}\comm{A_{\alpha}}{\rho_A(t)\Lambda_{\alpha\beta}^{\dag}(t)}e^{-iH_At}
+\end{equation}
+where
+\begin{equation}\label{Lambdasch}
+\Lambda_{\alpha\beta}(t) = \int_o^t\dd{t_1} e^{-iH_A(t-t_1)}A_{\beta}^{\dag}e^{iH_A(t-t_1)}G_{\alpha\beta}(t,t_1)
+\end{equation}
+Inserting these equations into equation~\ref{redfieldnointegral}, we obtain the dynamical equation in the Schr{\"o}dinger picture:
+\begin{equation}\label{yas}
+\dv{t}\rho_A(t) = -i\comm{H_A}{\rho_A(t)}-\sum_{\alpha,\beta}\comm{A_{\alpha}}{\Lambda_{\alpha\beta}(t)\rho_A(t)-\rho_A(t)\Lambda_{\alpha\beta}^{\dag}(t)}
+\end{equation}
 
 
 \section{Symmetric Spin-Boson Model}
@@ -240,36 +240,36 @@ G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamm
 \end{split}
 \end{align}
 
-\section{Results}
-
-Code has been written that can compute the dynamics of any finite-dimensional Hamiltonian coupled to a single spin-boson bath. In the future, the code will be strengthened so that it can easily handle an arbitrary number of spin-boson baths without potentially problematic rescripting.
-
-We first consider a single qubit coupled to a single spin-boson bath. The Hamiltonian for the qubit is given by $H_0 = \sigma_z$ and the interaction between the bath and system is mediated by $V_I = \lambda\sigma_x$, where we use $\lambda=0.1$. Further, we use a temperature of $T=1.0$ and $\gamma=0.1$. The initial density matrix is given by
-$$\rho(0) =
-\begin{pmatrix}
-	1 & 0 \\ 
-	0 & 0
-\end{pmatrix}$$
-The population dynamics are illustrated in \ref{fig:q1b1}.
-
-\begin{figure}[h]
-	\includegraphics[scale=0.5]{plotQ1B1.pdf}
-	\label{fig:q1b1}
-\end{figure}
-
-We next consider a system of two entangled qubits, in which a single qubit is coupled to a spin-boson bath. The Hamiltonian for the qubit system is given by $$H_0 = \frac{1}{2}\sigma_z\ten\I + \frac{1}{2}\I\ten\sigma_z + \left(\sigma^+\ten\sigma^-+\sigma^-\ten\sigma^+\right).$$The interaction between the system and the bath is mediated by $$V_I = \lambda\I\ten\sigma_x$$where we again use $\lambda=0.1$. As before, we take $T=1.0$ and $gamma=0.1$. The initial density matrix is given by
-$$rho(0) =
-\begin{pmatrix}
-0 & 0 & 0 & 0 \\ 
-0 & 1 & 0 & 0 \\ 
-0 & 0 & 0 & 0 \\ 
-0 & 0 & 0 & 0
-\end{pmatrix}$$
-The population dynamics are illustrated in \ref{fig:q2b2}.
-
-\begin{figure}[h]
-	\includegraphics[scale=0.5]{plotQ2B1.pdf}
-	\label{fig:q2b2}
-\end{figure}
+%\section{Results}
+%
+%Code has been written that can compute the dynamics of any finite-dimensional Hamiltonian coupled to a single spin-boson bath. In the future, the code will be strengthened so that it can easily handle an arbitrary number of spin-boson baths without potentially problematic rescripting.
+%
+%We first consider a single qubit coupled to a single spin-boson bath. The Hamiltonian for the qubit is given by $H_0 = \sigma_z$ and the interaction between the bath and system is mediated by $V_I = \lambda\sigma_x$, where we use $\lambda=0.1$. Further, we use a temperature of $T=1.0$ and $\gamma=0.1$. The initial density matrix is given by
+%$$\rho(0) =
+%\begin{pmatrix}
+%	1 & 0 \\ 
+%	0 & 0
+%\end{pmatrix}$$
+%The population dynamics are illustrated in \ref{fig:q1b1}.
+%
+%\begin{figure}[h]
+%	\includegraphics[scale=0.5]{plotQ1B1.pdf}
+%	\label{fig:q1b1}
+%\end{figure}
+%
+%We next consider a system of two entangled qubits, in which a single qubit is coupled to a spin-boson bath. The Hamiltonian for the qubit system is given by $$H_0 = \frac{1}{2}\sigma_z\ten\I + \frac{1}{2}\I\ten\sigma_z + \left(\sigma^+\ten\sigma^-+\sigma^-\ten\sigma^+\right).$$The interaction between the system and the bath is mediated by $$V_I = \lambda\I\ten\sigma_x$$where we again use $\lambda=0.1$. As before, we take $T=1.0$ and $gamma=0.1$. The initial density matrix is given by
+%$$rho(0) =
+%\begin{pmatrix}
+%0 & 0 & 0 & 0 \\ 
+%0 & 1 & 0 & 0 \\ 
+%0 & 0 & 0 & 0 \\ 
+%0 & 0 & 0 & 0
+%\end{pmatrix}$$
+%The population dynamics are illustrated in \ref{fig:q2b2}.
+%
+%\begin{figure}[h]
+%	\includegraphics[scale=0.5]{plotQ2B1.pdf}
+%	\label{fig:q2b2}
+%\end{figure}
 
 \end{document}
