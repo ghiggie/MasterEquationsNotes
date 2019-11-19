@@ -153,7 +153,7 @@ where
 \begin{equation}\label{Lambdaint}
 \til{\Lambda}_{\alpha\beta}(t) = \int_o^t\dd{t_1} \til{A}_{\beta}^{\dag}(t_1)G_{\alpha\beta}(t,t_1)
 \end{equation}
-Equation~\ref{redfieldnointegral} is called the \textit{Redfield} equation.
+Equation~\ref{redfieldnointegral} is called the \textit{Redfield} equation. Note that this is still not a fully Markovian equation. In order to transform to a fully Markovian equation, replace $\til{\Lambda}(t)$ with $\lim_{t\to\infty}\til{\Lambda}(t)$. We can later transform to Lindblad form by applying the secular approximation.
 
 \section{Conversion to Schr{\"o}dinger Picture}
 
@@ -176,6 +176,52 @@ Inserting these equations into equation~\ref{redfieldnointegral}, we obtain the 
 \dv{t}\rho_A(t) = -i\comm{H_A}{\rho_A(t)}-\sum_{\alpha,\beta}\comm{A_{\alpha}}{\Lambda_{\alpha\beta}(t)\rho_A(t)-\rho_A(t)\Lambda_{\alpha\beta}^{\dag}(t)}
 \end{equation}
 
+\section{Thermodynamics}
+
+\subsection{$\eta$}
+
+In the general theory with a single bilinear coupling, we may write
+\begin{equation}
+i\dv{t}\rho_A(t) = \comm{H_A}{\rho_A(t)} + \comm{A}{\eta}
+\end{equation}
+where $\eta = \Ptra{B}{(\I\ten X)\rho_{AB}}$. In the Redfield regime, we may write
+\begin{equation}
+\eta_{RF} = -i\Lambda(t)\rho_A(t) + i\rho_A(t)\Lambda^{\dag}(t)
+\end{equation}
+Due to the Born approximation, we may write $\rho_{AB}(t) = \rho_A(t)\ten\rho_B^G$. This allows us to write $\eta = \rho_A(t)\Ptra{B}{X\rho_B^G}$. Does this cause an issue? We've previously defined the system such that $\Ptra{B}{X\rho_B^G}=0$. I suspect that I am misunderstanding something regarding the Born approximation. Maybe the appropriate route in the Born approximation was to assume that the zero-point energy of the composite system could be taken to be $0$? This would possibly save my new work, so that I cannot conclude $\eta=0$. Yeah I think that this is the correct resolution. I'll implement this in the notes LATER.
+
+\subsection{Heat}
+
+We define the heat as the energy leaving the bath
+\begin{equation}
+    Q_B = \Ptra{B}{H_B\rho_B(t_0)} - \Ptra{B}{H_B\rho_B(t)}
+\end{equation}
+This is fine, but not really useful because we have no method for recording the density of the bath (in general; in the Redfield regime, I have no clue because it seems that the heat should be $0$). We can redefine the heat in terms of other thermodynamic values by projecting into a slightly larger Hilbert space, and using the Hamiltonian for the composite system:
+\begin{align}
+    Q_B &= \Ptra{B}{H_B\rho_B(t_0)} - \Ptra{B}{H_B\rho_B(t)}\\
+    &= \Tra{(\I\ten H_B)\rho_{AB}(t_0)} - \Tra{(\I\ten H_B)\rho_{AB}(t)}\\
+    &= \Delta U + \Delta\Tra{V_I\rho_{AB}}
+\end{align}
+where $U = \Tr{H_A\rho_A}$ is the internal energy of the system. We interpret this result as energy conservation, in which the heat released by the system is stored in the system and coupling energies. If we introduce a bilinear coupling $V_I = A\ten X$. Then, we can write the heat as
+\begin{equation}
+    Q_B = \Delta U + \Delta\Ptra{A}{X\eta}
+\end{equation}
+where $\eta = \Ptra{B}{(\I\ten X)\rho_{AB}}$.
+
+\subsection{Heat Current}
+
+We define the heat current $J$ by $J = \dv{t}Q_B$. Inserting the expressions from above, we may write
+\begin{equation}
+    J = -i\Ptra{A}{H_A\comm{X}{\eta}}+\Ptra{A}{X\dv{t}\eta}
+\end{equation}
+
+\subsection{Entropy Production}
+
+We define the entropy production as
+\begin{equation}
+    \Sigma = \Delta S - \beta Q_B
+\end{equation}
+where $\Delta S$ is the change in the von-Neumann entropy of the system. We define the entropy production rate as $\dv{t}\Sigma$.
 
 \section{Symmetric Spin-Boson Model}
 
@@ -202,10 +248,10 @@ In terms of our previously defined operators, we have
 \begin{align}\label{AXop}
 \begin{split}
 	A_1 &= V_{1,H}\ten \I_2\\
-	X_2 &= Y_H\ten \I_C\\ 
+	X_2 &= Y_H\ten \I_C\\
 	A_2 &= \I_1\ten V_{2,C}\\
 	X_3 &= \I_H\ten Y_C
-\end{split} 
+\end{split}
 \end{align}
 
 We may now calculate the bath correlation functions $G_{\alpha,\beta}(t_1,t_2)$. When $\alpha\neq\beta$, $G_{\alpha,\beta}(t_1,t_2)=0$ because we defined $\ave{\til{X}_{\alpha}(t)}{\rho_l^G}=0$. The remaining correlations are
@@ -235,7 +281,7 @@ where $G_{\alpha}(t_1,t_2)$ as defined in equation~\ref{bathdrude}.
 The series in~\ref{bathdrude} is not easily done numerically. Because of the exponential decay, we can just compute the bulk of the series, and approximate the tail of the series as a delta function of $\tau$. For now, we will only include one Matsubara term, so that we can approximate our series as
 \begin{align}\label{corrapprox}
 \begin{split}
-G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamma_l}{2}\right)-i\right]e^{-\gamma_l\tau}+\frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_1}{\nu_1^2-\gamma_l^2}e^{-\nu_1\tau}\\
+G_l(t_1,t_2) = G_l(\tau) = &\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamma_l}{2}\right)-i\right]e^{-\gamma_l\tau}+\frac{4\lambda_l\gamma_l}{\beta_l}\frac{\nu_1}{\nu_1^2-\gamma_l^2}e^{-\nu_1\tau}\\
 &+\left[\frac{4\lambda_l}{\beta_l\gamma_l}-2\lambda_l\cot\left(\frac{\beta_l\gamma_l}{2}\right) - \frac{8\lambda_l\gamma_l\beta_l}{(2\pi)^2-(\beta_l\gamma_l)^2}\right]\delta(\tau)
 \end{split}
 \end{align}
@@ -247,7 +293,7 @@ G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamm
 %We first consider a single qubit coupled to a single spin-boson bath. The Hamiltonian for the qubit is given by $H_0 = \sigma_z$ and the interaction between the bath and system is mediated by $V_I = \lambda\sigma_x$, where we use $\lambda=0.1$. Further, we use a temperature of $T=1.0$ and $\gamma=0.1$. The initial density matrix is given by
 %$$\rho(0) =
 %\begin{pmatrix}
-%	1 & 0 \\ 
+%	1 & 0 \\
 %	0 & 0
 %\end{pmatrix}$$
 %The population dynamics are illustrated in \ref{fig:q1b1}.
@@ -260,9 +306,9 @@ G_l(t_1,t_2) = G_l(\tau) = &2\lambda_l\gamma_l\left[\cot\left(\frac{\beta_l\gamm
 %We next consider a system of two entangled qubits, in which a single qubit is coupled to a spin-boson bath. The Hamiltonian for the qubit system is given by $$H_0 = \frac{1}{2}\sigma_z\ten\I + \frac{1}{2}\I\ten\sigma_z + \left(\sigma^+\ten\sigma^-+\sigma^-\ten\sigma^+\right).$$The interaction between the system and the bath is mediated by $$V_I = \lambda\I\ten\sigma_x$$where we again use $\lambda=0.1$. As before, we take $T=1.0$ and $gamma=0.1$. The initial density matrix is given by
 %$$rho(0) =
 %\begin{pmatrix}
-%0 & 0 & 0 & 0 \\ 
-%0 & 1 & 0 & 0 \\ 
-%0 & 0 & 0 & 0 \\ 
+%0 & 0 & 0 & 0 \\
+%0 & 1 & 0 & 0 \\
+%0 & 0 & 0 & 0 \\
 %0 & 0 & 0 & 0
 %\end{pmatrix}$$
 %The population dynamics are illustrated in \ref{fig:q2b2}.
