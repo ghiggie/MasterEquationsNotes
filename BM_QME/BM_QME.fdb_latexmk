@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1574123599 "BM_QME.tex" "BM_QME.pdf" "BM_QME" 1574123606
-  "BM_QME.aux" 1574123604 4577 a937d1d4165187decbe117d66ac087aa "pdflatex"
-  "BM_QME.out" 1574123604 853 d20163fd766d82c9eff44dd1ea503f13 "pdflatex"
-  "BM_QME.tex" 1574123586 21577 7f5410205c91dabb78687ea2d6f4c590 ""
-  "BM_QME.toc" 1574123604 1132 6b3ed4df806417fa95096c488771b70e "pdflatex"
+["pdflatex"] 1574704816 "BM_QME.tex" "BM_QME.pdf" "BM_QME" 1574704824
+  "BM_QME.aux" 1574704822 4577 a937d1d4165187decbe117d66ac087aa "pdflatex"
+  "BM_QME.out" 1574704822 853 d20163fd766d82c9eff44dd1ea503f13 "pdflatex"
+  "BM_QME.tex" 1574704810 21577 bd1a6f7d77cb1c67bbd2e2a70f2489a7 ""
+  "BM_QME.toc" 1574704822 1132 6b3ed4df806417fa95096c488771b70e "pdflatex"
   "c:/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1563912009 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1563906271 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1563906271 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -102,8 +102,8 @@
   "c:/texlive/2019/texmf.cnf" 1563933103 673 4ae7b2f49cee444c5343a45b5d0f169c ""
   "nul" 0 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
-  "BM_QME.out"
   "BM_QME.toc"
   "BM_QME.aux"
-  "BM_QME.log"
   "BM_QME.pdf"
+  "BM_QME.log"
+  "BM_QME.out"
