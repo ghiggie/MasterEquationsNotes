@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1574704816 "BM_QME.tex" "BM_QME.pdf" "BM_QME" 1574704824
+["pdflatex"] 1574704816 "BM_QME.tex" "BM_QME.pdf" "BM_QME" 1576028129
   "BM_QME.aux" 1574704822 4577 a937d1d4165187decbe117d66ac087aa "pdflatex"
   "BM_QME.out" 1574704822 853 d20163fd766d82c9eff44dd1ea503f13 "pdflatex"
   "BM_QME.tex" 1574704810 21577 bd1a6f7d77cb1c67bbd2e2a70f2489a7 ""
@@ -104,6 +104,6 @@
   (generated)
   "BM_QME.toc"
   "BM_QME.aux"
+  "BM_QME.out"
   "BM_QME.pdf"
   "BM_QME.log"
-  "BM_QME.out"
